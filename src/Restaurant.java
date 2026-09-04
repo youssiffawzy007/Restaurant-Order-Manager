@@ -42,10 +42,10 @@ public class Restaurant {
 
     public void displayMenu() {
         int counter = 1;
-        menu.forEach(menuItem -> {
-          System.out.println("Menu Item " + counter++);
-          System.out.println(menuItem);
-        });
+        for (MenuItem menuItem : menu) {
+            System.out.println("Menu Item " + counter++);
+            System.out.println(menuItem);
+        }
     }
 
     public MenuItem searchMenuItem(int id) {
