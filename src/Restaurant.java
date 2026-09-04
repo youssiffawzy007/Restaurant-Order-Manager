@@ -29,32 +29,34 @@ public class Restaurant {
     }
 
     public void removeMenuItem(int id) {
-        for (MenuItem menuItem : menu) {
-            if (menuItem.getId() == id) {
-                menu.remove(menuItem);
-                System.out.println("This Menu Item removed successfully.");
-                return;
-            }
+        boolean removed = menu.removeIf(
+                menuItem -> menuItem.getId() == id
+        );
+
+        if (removed) {
+            System.out.println("This Menu Item removed successfully.");
+        } else {
+            System.out.println("This ID not found.");
         }
-        System.out.println("This ID not found.");
     }
 
     public void displayMenu() {
         int counter = 1;
-        for (MenuItem menuItem : menu) {
-            System.out.println("Menu Item " + counter++);
-            System.out.println(menuItem);
-        }
+        menu.forEach(menuItem -> {
+          System.out.println("Menu Item " + counter++);
+          System.out.println(menuItem);
+        });
     }
 
     public MenuItem searchMenuItem(int id) {
-        for (MenuItem menuItem : menu) {
-            if (menuItem.getId() == id) {
-//                System.out.println("Menu Item: ");
-//                System.out.println(menuItem);
-                return menuItem;
-            }
+        Optional<MenuItem> item = menu.stream()
+            .filter(menuItem -> menuItem.getId() == id)
+            .findFirst();
+
+        if (item.isPresent()) {
+            return item.get();
         }
+
         System.out.println("This ID not found.");
         return null;
     }
